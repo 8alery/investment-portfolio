@@ -135,6 +135,7 @@
 
 				  <b-button class="mt-4" type="submit" variant="primary">Рассчитать доходность</b-button>
 				  <b-button class="mt-4 ml-2" type="button" variant="outline-primary" @click="addToPortfolio">Добавить в портфель</b-button>
+				  <b-button class="mt-4 ml-2" type="button" variant="danger" @click="remove">Удалить</b-button>
 			  </b-form>
 		  </b-col>
 		  <b-col cols="4">
@@ -348,6 +349,11 @@
 			},
 			addToPortfolio(){
 				this.$store.commit('addBondToPortfolio', this.params.isin);
+			},
+			remove(){
+				this.$store.commit('removeBond', this.params.isin);
+				this.$router.push('/bonds');
+
 			}
 		}
 	};

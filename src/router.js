@@ -1,11 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import Bonds from './views/Bonds/Bonds.vue';
-import AddBond from './views/Bonds/AddBond.vue';
+//import Bonds from './views/Bonds/Bonds.vue';
+import BondsAlternate from '@/views/Bonds/BondsAlternate';
+import ViewBond from '@/views/Bonds/ViewBond';
 
-import Portfolio from './views/Portfolio/Portfolio.vue';
-import EditPortfolioItem from './views/Portfolio/EditPortfolioItem.vue';
+import Shares from '@/views/Shares/Shares';
+import ViewShare from '@/views/Shares/ViewShare';
+
+import views from './views';
 
 Vue.use(Router);
 
@@ -13,23 +16,40 @@ export default new Router({
 	routes: [
 		{
 			path: '/bonds',
-			component: Bonds
+			name: 'bonds',
+			component: BondsAlternate
 		},
 		{
-			path: '/bonds/new',
-			component: AddBond
+			path: '/bonds/:secid/:board',
+			name: 'viewBond',
+			component: ViewBond
 		},
 		{
-			path: '/bonds/:bond_id',
-			component: AddBond
+			path: '/portfolio', name: 'portfolio', component: views.Portfolio.IndexPage,
+			children: [
+				{ path: 'orders', name: 'portfolioOrders', component: views.Portfolio.OrdersPage },
+				{ path: 'orders/:id', name: 'editPortfolioOrder', component: views.Portfolio.EditOrderPage },
+				{ path: 'securities', name: 'portfolioSecurities', component: views.Portfolio.SecuritiesPage },
+				{ path: 'securities/:id', name: 'viewPortfolioSecurity', component: views.Portfolio.ViewSecurityPage },
+				{ path: 'fees', name: 'portfolioFees', component: views.Portfolio.FeesPage },
+				{ path: 'fees/new', name: 'newPortfolioFee', component: views.Portfolio.EditFeePage },
+				{ path: 'fees/:id', name: 'editPortfolioFee', component: views.Portfolio.EditFeePage }
+			]
+		},
+		// {
+		// 	path: '/portfolio/:id',
+		// 	name: 'editPortfolio',
+		// 	component: EditPortfolioItem
+		// },
+		{
+			path: '/shares',
+			name: 'shares',
+			component: Shares
 		},
 		{
-			path: '/portfolio',
-			component: Portfolio
-		},
-		{
-			path: '/portfolio/:item_id',
-			component: EditPortfolioItem
+			path: '/shares/:secid',
+			name: 'viewShare',
+			component: ViewShare
 		},
 		// {
 		// 	path: '/about',

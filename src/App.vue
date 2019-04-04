@@ -2,6 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/bonds">Облигации</router-link> |
+      <router-link to="/shares">Акции</router-link> |
       <router-link to="/portfolio">Портфель</router-link>
     </div>
     <router-view/>

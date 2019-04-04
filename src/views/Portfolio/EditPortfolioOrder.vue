@@ -3,9 +3,6 @@
 		<b-form v-if="item" @submit.prevent="save">
 			<b-row>
 				<b-col cols="8">
-
-
-
 					<b-form-group
 							id="amountGroup"
 							label="Количество:"
@@ -17,6 +14,17 @@
 						/>
 					</b-form-group>
 					<b-form-group
+							id="priceGroup"
+							label="Цена покупки:"
+							label-for="price">
+						<b-form-input
+								step="any"
+								id="price"
+								type="number"
+								v-model.number="item.price"
+						/>
+					</b-form-group>
+					<b-form-group
 							id="purchaseDateGroup"
 							label="Дата покупки:"
 							label-for="purchaseDate">
@@ -25,12 +33,10 @@
 									name="purchaseDate"></datepicker>
 					</b-form-group>
 					<b-button class="mt-4" type="submit" variant="primary">Сохранить</b-button>
+					<b-button class="mt-4 ml-2" type="button" variant="danger" @click="deleteItem">Удалить</b-button>
 				</b-col>
 				<b-col cols="4">
-					<div>Инструмент: {{ bond.name }}</div>
-					<div>Ближайший купон: {{ nextCouponDate }}</div>
-
-					<b-table :items="moneyFlow" :fields="flowFields" thead-class="hidden_header"></b-table>
+					<div>Инструмент: {{ bond.SHORTNAME }}</div>
 
 				</b-col>
 			</b-row>
@@ -44,7 +50,7 @@
 	import helpers from '../../js/helpers';
 
 	export default {
-		name: 'EditPortfolioItem',
+		name: 'EditPortfolioOrder',
 		components: { Datepicker },
 		data(){
 			return {
@@ -56,8 +62,11 @@
 			};
 		},
 		computed: {
+			id(){
+				return this.$route.params.id;
+			},
 			bond(){
-				return this.$store.state.bondsCache[this.item.bondId];
+				return this.$store.getters.bondsCache[this.item.secid] || {};
 			},
 			nextCouponDate(){
 				let currentDate = moment(this.bond.maturationDate);
@@ -72,25 +81,26 @@
 			},
 			purchaseDate(){
 				return this.item.purchaseDate && moment(this.item.purchaseDate).toDate();
-			},
-			moneyFlow(){
-				return helpers.getCouponMoneyFlowForBond({
-					startDate: this.item.purchaseDate,
-					bond: this.bond
-				});
 			}
 		},
 		created(){
-			this.$store.dispatch('getPortfolioItem', this.$route.params.item_id).then((item) => {
-				this.item = item;
+			this.$store.dispatch('getOrder', this.id).then((item) => {
+				this.item = _.extend({ price: 0 }, item);
+				this.$store.dispatch('bonds.get', item.secid);
 			});
+
 		},
 		methods: {
 			setDate(field, value){
 				this.item[field] = moment(value).toDate();
 			},
 			save(){
-				this.$store.dispatch('savePortfolioItem', this.item).then(() => {
+				this.$store.dispatch('updateOrder', this.item).then(() => {
+					this.$router.push('/portfolio');
+				});
+			},
+			deleteItem(){
+				this.$store.dispatch('deleteOrder', this.item.id).then(() => {
 					this.$router.push('/portfolio');
 				});
 			}

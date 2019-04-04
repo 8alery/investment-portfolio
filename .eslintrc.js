@@ -19,10 +19,6 @@ module.exports = {
 			'error',
 			'single'
 		],
-		'semi': [
-			'error',
-			'always'
-		],
 		'no-unused-vars': ['error', { 'argsIgnorePattern': 'next' }],
 		'vue/script-indent': ['error', 'tab', {
 			'baseIndent': 1,
