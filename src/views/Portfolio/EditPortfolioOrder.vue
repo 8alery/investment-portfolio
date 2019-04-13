@@ -47,7 +47,7 @@
 <script>
 	import Datepicker from 'vuejs-datepicker';
 	import moment from 'moment';
-	import helpers from '../../js/helpers';
+	//import helpers from '../../js/helpers';
 
 	export default {
 		name: 'EditPortfolioOrder',

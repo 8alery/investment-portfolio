@@ -58,7 +58,7 @@
 					{
 						key: 'secid',
 						label: 'Инструмент',
-						formatter:(value) => {
+						formatter:() => {
 
 							// const bond = this.$store.getters.bondsCache[value];
 							// if (bond){

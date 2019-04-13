@@ -88,8 +88,8 @@
 						helpers.calculateOwnershipForPayments({ payments, orders: this.orders });
 						return payments;
 					}
-
 				}
+				return null;
 			},
 			totalPayments(){
 				return _.reduce(this.payments, (acc, el) => acc + el.total, 0);

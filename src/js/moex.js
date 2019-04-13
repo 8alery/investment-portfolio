@@ -25,7 +25,7 @@ const getSelectedKeys = (selectedKeys, allKeys, values) => {
 
 export default {
 	getSecuritiesForMarketAndBoard({ market, board }){
-		return axios.get(`http://iss.moex.com/iss/engines/stock/markets/${market}/boards/${board}/securities.json`).then((response) => {
+		return axios.get(`https://iss.moex.com/iss/engines/stock/markets/${market}/boards/${board}/securities.json`).then((response) => {
 
 			if (response.status !== 200){
 				return Promise.reject(response.statusText);
@@ -55,7 +55,7 @@ export default {
 	getBond(secid){
 
 		return Promise.all([
-			axios.get(`http://iss.moex.com/iss/securities/${secid}.json`).then((response) => {
+			axios.get(`https://iss.moex.com/iss/securities/${secid}.json`).then((response) => {
 				if (response.status !== 200){
 					return Promise.reject(response.statusText);
 				}
@@ -79,7 +79,7 @@ export default {
 				return { info, boards: boardsData }
 
 			}),
-			axios.get(`http://iss.moex.com/iss/statistics/engines/stock/markets/bonds/bondization/${secid}.json`, {
+			axios.get(`https://iss.moex.com/iss/statistics/engines/stock/markets/bonds/bondization/${secid}.json`, {
 				params: {
 					start: 0,
 					limit: 100,
@@ -126,7 +126,7 @@ export default {
 		});
 	},
 	getBoardsForMarket(market){
-		return axios.get(`http://iss.moex.com/iss/engines/stock/markets/${market}/boards.json`).then((response) => {
+		return axios.get(`https://iss.moex.com/iss/engines/stock/markets/${market}/boards.json`).then((response) => {
 
 			if (response.status !== 200){
 				return Promise.reject(response.statusText);
@@ -144,7 +144,7 @@ export default {
 	},
 	getShare(secid){
 		return Promise.all([
-			axios.get(`http://iss.moex.com/iss/securities/${secid}.json`).then((response) => {
+			axios.get(`https://iss.moex.com/iss/securities/${secid}.json`).then((response) => {
 				if (response.status !== 200){
 					return Promise.reject(response.statusText);
 				}
