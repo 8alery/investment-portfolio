@@ -29,10 +29,9 @@ module.exports = {
 	},
 	parserOptions: {
 		parser: 'babel-eslint',
-		ecmaVersion: 2017,
+		ecmaVersion: 9,
 		sourceType: 'module',
 		ecmaFeatures: {
-			experimentalObjectRestSpread: true,
 			jsx: true
 		}
 	},
